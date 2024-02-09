@@ -1,0 +1,7 @@
+export const PrimaryColor = "#4562a6"
+export const LogoFont = "Carphe-Regular"
+export const HeadFontMedium = "ZillaSlab-Medium"
+export const HeadFontBold = "ZillaSlab-Bold"
+export const HeadFontRegular = "ZillaSlab-Regular"
+export const bodyFontBold = "Satoshi"
+export const bodyFont = "Satoshi-Regular"

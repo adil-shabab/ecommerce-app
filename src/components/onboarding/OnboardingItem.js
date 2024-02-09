@@ -1,6 +1,7 @@
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
+import { HeadFontMedium, LogoFont, PrimaryColor, bodyFont } from '../../contant/Constant';
 
 const OnboardingItem = ({ item }) => {
   const { width, height } = useWindowDimensions(); // Get screen dimensions
@@ -35,19 +36,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   head_txt: {
-    fontFamily: 'Carphe-Regular',
+    fontFamily: LogoFont,
     fontSize: 45,
-    color: '#4562a6',
+    color: PrimaryColor,
   },
   title: {
     fontSize: 22,
     marginBottom: 15,
-    fontFamily: 'ZillaSlab-Medium'
+    fontFamily: HeadFontMedium
   },
   description: {
     fontSize: 15,
     textAlign: 'center',
-    fontFamily: 'Satoshi-Regular',
+    fontFamily: bodyFont,
     marginBottom: 25
   },
   text:{
