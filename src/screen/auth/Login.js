@@ -15,7 +15,6 @@ const Login = (props) => {
 
 
     const showToast = (msg, type) => {
-        console.log("Hai", msg)
         setMessage({ msg, type });
     };
     

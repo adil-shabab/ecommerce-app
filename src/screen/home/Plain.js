@@ -17,11 +17,9 @@ const Plain = ({ navigation }) => {
 
         const redirectTimer = setTimeout(() => {
             if (isLoggedIn) {
-                // User is already logged in, redirect to Home screen
-                navigation.replace('Home');
+                navigation.replace('Tab'); // can i pass initialRoute of MyTabs from here
             } else {
-                // User is not logged in, redirect to Login screen
-                navigation.replace('Signup');
+                navigation.replace('Tab');
             }
         }, 1000);
 

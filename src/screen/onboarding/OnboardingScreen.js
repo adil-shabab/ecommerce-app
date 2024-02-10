@@ -17,7 +17,7 @@ const OnboardingScreen = ({navigation}) => {
 
   const handleSkip = () => {
       setItem('OnboardingCompleted', 'true');
-      navigation.navigate("Home")
+      navigation.navigate("Login")
   };
 
   const handleNext = async () => {
@@ -25,7 +25,7 @@ const OnboardingScreen = ({navigation}) => {
       flatListRef.current.scrollToIndex({ animated: true, index: currentIndex + 1 });
     } else {
       setItem('OnboardingCompleted', 'true');
-      navigation.navigate("Home")
+      navigation.navigate("Login")
     }
   };
   
