@@ -21,6 +21,7 @@ import CartIconWhite from '../assets/img/cartIconWhite.png'
 import ProfileIconWhite from '../assets/img/profileIconWhite.png'
 import NotificationIconWhite from '../assets/img/notificationIconWhite.png'
 import { PrimaryColor } from '../contant/Constant';
+import ProductDetail from '../screen/product/ProductDetail';
 
 
 
@@ -123,6 +124,7 @@ const MainNavigation = () => {
                 <Stack.Screen name='Plain' component={Plain} options={{ headerShown: false }} />
                 <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name='Signup' component={Signup} options={{ headerShown: false }} />
+                <Stack.Screen name='ProductDetail' component={ProductDetail} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -145,9 +147,9 @@ const styles = StyleSheet.create({
       resizeMode: 'contain'
     },
     focusedTabIcon: {
-        marginTop: -22,
-        borderWidth: 6,
-        borderColor: 'white'
+      marginTop: -22,
+      borderWidth: 6,
+      borderColor: 'white'
     }
   });
   

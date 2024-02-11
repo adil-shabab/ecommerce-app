@@ -1,6 +1,6 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import { View, Animated, Text, PanResponder, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import Avatar from '../../assets/img/userAvatar.jpg'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import CartIcon from '../../assets/img/cartBold.png'
 import NotificationIcon from '../../assets/img/notificationBold.png'
 import { PrimaryColor, bodyFont, bodyFontBold } from '../../contant/Constant'
@@ -9,57 +9,154 @@ import SearchIcon from '../../assets/img/seachGray.png'
 import SearchIconWhite from '../../assets/img/searchWhite.png'
 import Card from '../../components/product/Card'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import RecentCard from '../../components/product/RecentCard'
+import OrderSuccessModal from '../../components/modal/OrderSuccessModal'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
   const [message, setMessage] = useState(null);
+  const [ordervisible, setOrderVisible] = useState(true);
+  const panY = useRef(new Animated.Value(0)).current;
 
 
   const showToast = (msg, type) => {
-      setMessage({ msg, type });
+    setMessage({ msg, type });
+  };
+
+  
+
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (_, gestureState) => {
+        if (gestureState.dy > 0 && ordervisible) {
+          panY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 50) {
+          Animated.timing(panY, {
+            toValue: 500,
+            duration: 300,
+            useNativeDriver: true,
+          }).start(() => setOrderVisible(false));
+        } else {
+          Animated.timing(panY, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    }),
+  ).current;
+
+
+
+  const handleBringBackfollowerModal = () => {
+    setOrderVisible(true);
+    Animated.timing(panY, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
   };
 
 
 
-  const boxArray = [
+
+
+  const popularProducts = [
     {
       id: 1,
       name : 'Apple Watch 5',
       description : 'Apple Watch Series 5',
-      price: 'Rs. 85899',
+      price: '85899',
       image : require('../../assets/img/watch.png'),
-      brand: 'Apple'
+      brand: 'Apple',
+      liked: true
     },
     {
       id: 2,
       name : 'Headphone',
       description : 'Sony Headphone IX',
-      price: 'Rs. 9899',
+      price: '9899',
       image : require('../../assets/img/headphone.png'),
-      brand: 'Sony'
+      brand: 'Sony',
+      liked: false
     },
     {
       id: 3,
       name : 'Airpod',
       description : 'Apple Airpod with ANC',
-      price: 'Rs. 3899',
+      price: '3899',
       image : require('../../assets/img/earphone.png'),
-      brand: 'Apple'
+      brand: 'Apple',
+      liked: false
     },
     {
       id: 3,
       name : 'Alarm Clock',
       description : 'Royal Alarm Clock',
-      price: 'Rs. 1899',
+      price: '1899',
       image : require('../../assets/img/clock.png'),
-      brand: 'Royal'
+      brand: 'Royal',
+      liked: true
+    },
+  ]
+
+
+
+  const recentlyViewedProduct = [
+    {
+      id: 1,
+      name : 'Apple Watch 5',
+      description : 'Apple Watch Series 5',
+      price: '85899',
+      image : require('../../assets/img/watch.png'),
+      brand: 'Apple',
+      liked: true,
+      rating: 4.0
+    },
+    {
+      id: 2,
+      name : 'Headphone',
+      description : 'Sony Headphone IX',
+      price: '9899',
+      image : require('../../assets/img/headphone.png'),
+      brand: 'Sony',
+      liked: false,
+      rating: 4.8
+
+    },
+    {
+      id: 3,
+      name : 'Airpod',
+      description : 'Apple Airpod with ANC',
+      price: '3899',
+      image : require('../../assets/img/earphone.png'),
+      brand: 'Apple',
+      liked: false,
+      rating: 4.6
+
+    },
+    {
+      id: 3,
+      name : 'Alarm Clock',
+      description : 'Royal Alarm Clock',
+      price: '1899',
+      image : require('../../assets/img/clock.png'),
+      brand: 'Royal',
+      liked: true,
+      rating: 5
     },
   ]
 
 
   return (
     <SafeAreaView>
-      <ScrollView style={styles.container}>
+      <ScrollView style={{...styles.container}}>
         <View style={styles.header_view}>
           <TouchableOpacity onPress={()=>{
             showToast('Redirected to Profile', 'success')
@@ -109,8 +206,8 @@ const HomeScreen = () => {
           </View>
 
           <View style={styles.card_container}>
-            {boxArray.map((item, index) => (
-              <Card key={index} item={item} />
+            {popularProducts?.map((item, index) => (
+              <Card handleBringBackfollowerModal={handleBringBackfollowerModal} showToast={showToast} key={index} item={item} />
             ))}
           </View>
         </View>
@@ -124,13 +221,21 @@ const HomeScreen = () => {
               showToast('Redirected to Product Page', 'success')
             }}>
               <Text style={styles.link_txt}>View All</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>          
           </View>
+
+
+          <View style={styles.recently_viewed_card_container}>
+            {recentlyViewedProduct?.map((item, index) => (
+              <RecentCard navigation={navigation} showToast={showToast} key={index} item={item} />
+            ))}
+          </View>  
         </View>
 
 
       </ScrollView>
       {message && <Toast setMessage={setMessage} message={message.msg} type={message.type} />}
+      <OrderSuccessModal panY={panY} panResponder={panResponder} visible={ordervisible} setVisible={setOrderVisible}  />
     </SafeAreaView>
   )
 }
@@ -265,10 +370,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     marginTop: 18
   },
+  recently_viewed_card_container: {
+    marginTop: 10
+  },
   recent_product:{
     paddingHorizontal: 20,
     marginTop: 20,
-    marginBottom: 150, // to remove
+    marginBottom: 30,
   }
   
 })
