@@ -1,6 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { LogoFont, PrimaryColor, bodyFont, bodyFontBold } from '../../contant/Constant'
+import { LogoFont, PrimaryColor} from '../../contant/Constant'
 
 const Button = ({ txt, onClick }) => { // Corrected destructuring of props
   return (
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     btn_txt: {
-        fontFamily: LogoFont,
-        fontSize: 22,
-        textAlign: 'center'
+      fontFamily: LogoFont,
+      fontSize: 22,
+      textAlign: 'center'
     }
 })
