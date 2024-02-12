@@ -30,6 +30,8 @@ const Login = (props) => {
     const OnSignIn = () => {
         console.log("Signin Button Clicked");
         showToast('Logged In', 'success')
+        props.navigation.navigate("Tab")
+
     }
 
     return (

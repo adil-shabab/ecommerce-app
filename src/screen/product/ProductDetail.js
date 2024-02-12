@@ -5,7 +5,6 @@ import Like from '../../assets/img/love.png'
 import Liked from '../../assets/img/redLove.png'
 import Back from '../../assets/img/backBlack.png'
 import { PrimaryColor, bodyFont, bodyFontBold, bodyFontMedium } from '../../contant/Constant'
-import Macbook from '../../assets/img/headphone.png'
 import Toast from '../../components/toast/Toast'
 import Star from '../../assets/img/star.png';
 import FloatingButton from '../../components/button/FloatingButton'
